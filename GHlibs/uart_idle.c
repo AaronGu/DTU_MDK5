@@ -9,6 +9,7 @@ int fputc(int ch, FILE *f)
   return 1;
 }
 
+
 /*** 变量定义 ***/
 volatile uint8_t Uart1_Rx_Buffer[Uart1_Rx_BufferSize] = {0};
 volatile uint8_t Uart1_Rcv_Cplt_Flag = 0x00;
@@ -52,3 +53,6 @@ void USART3_IRQHandler(void)
     HAL_UART_Receive_DMA(&huart3, (uint8_t *)Uart3_Rx_Buffer, Uart3_Rx_BufferSize); /*重新打开串口3 DMA IDLE */
 	}
 }
+
+
+

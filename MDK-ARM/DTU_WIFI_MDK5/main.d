@@ -48,9 +48,10 @@ dtu_wifi_mdk5\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 dtu_wifi_mdk5\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 dtu_wifi_mdk5\main.o: ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h
 dtu_wifi_mdk5\main.o: ../Inc/gpio.h
-dtu_wifi_mdk5\main.o: ../GHlibs/uart_idle.h
-dtu_wifi_mdk5\main.o: ../Inc/stm32f1xx_it.h
-dtu_wifi_mdk5\main.o: ../GHlibs/memalloc.h
+dtu_wifi_mdk5\main.o: ../GHlibs/ESP8266_driver.h
 dtu_wifi_mdk5\main.o: ../GHlibs/ATcmd.h
+dtu_wifi_mdk5\main.o: ../GHlibs/memalloc.h
 dtu_wifi_mdk5\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
 dtu_wifi_mdk5\main.o: ../GHlibs/ATcmd.h
+dtu_wifi_mdk5\main.o: ../GHlibs/uart_idle.h
+dtu_wifi_mdk5\main.o: ../Inc/stm32f1xx_it.h

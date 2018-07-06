@@ -60,9 +60,8 @@
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
+#include "ESP8266_driver.h"
 #include "uart_idle.h"
-#include "memalloc.h"
-#include "ATcmd.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -131,28 +130,38 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
+//	if(HAL_TIM_Base_Start_IT(&htim2) != HAL_OK)
+//	{
+//		printf("TIM2 start error\r\n");
+//	}
+	if(HAL_TIM_Base_Start_IT(&htim3) != HAL_OK)
+	{
+		printf("TIM3 start error\r\n");
+	}
+	if(HAL_TIM_Base_Start_IT(&htim4) != HAL_OK)
+	{
+		printf("TIM4 start error\r\n");
+	}
+	
+	
+	
+	
+	/* todo：整合到esp8266驱动库中 */
+	esp8266_init();                                                  /* esp8266初始化 */
+	HAL_Delay(1000);                                                 /* 延时1s，屏蔽esp8266开机输出信息 */
+	__HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);                     /* 打开串口3空闲中断 */
+	HAL_UART_Receive_DMA(&huart3, (uint8_t *)Uart3_Rx_Buffer, Uart3_Rx_BufferSize);   /* 打开串口3DMA接收中断 */
 
-//	Mem_Init();
-//	at_init();
-	HAL_GPIO_WritePin(WIFI_GPIO_0_GPIO_Port, WIFI_GPIO_0_Pin, GPIO_PIN_SET);
-	HAL_GPIO_WritePin(WIFI_RST_GPIO_Port, WIFI_RST_Pin, GPIO_PIN_SET);
-	HAL_GPIO_WritePin(WIFI_EN_GPIO_Port, WIFI_EN_Pin, GPIO_PIN_SET);
-	HAL_Delay(1000);
-		__HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);
-	HAL_UART_Receive_DMA(&huart3, (uint8_t *)Uart3_Rx_Buffer, 256);
+	
   /* USER CODE END 2 */
-
+	
+	
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		HAL_IWDG_Refresh(&hiwdg);
-		HAL_Delay(1000);
-	
-		HAL_GPIO_TogglePin(SYSSTAT_LED_GPIO_Port, SYSSTAT_LED_Pin);
-		
-		HAL_UART_Transmit(&huart3, (uint8_t *)"AT\r\n", 4, 100);
-		printf("\r\nmemration:[%8.2f%%] \r\n", MemRatioGet());
+		HAL_IWDG_Refresh(&hiwdg); 
+	  esp8266_processing();
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
@@ -277,6 +286,7 @@ static void MX_NVIC_Init(void)
 
 /* USER CODE BEGIN 4 */
 
+
 /* USER CODE END 4 */
 
 /**
@@ -296,7 +306,19 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
-
+	if(htim->Instance == TIM2){
+		
+	}
+	if(htim->Instance == TIM3){
+		at_processing();
+		at_time_task();
+		printf("TIM3 IT worked.\r\n");
+	}
+	if(htim->Instance == TIM4){
+		HAL_GPIO_TogglePin(SYSSTAT_LED_GPIO_Port, SYSSTAT_LED_Pin);
+		
+	
+	}
   /* USER CODE END Callback 1 */
 }
 

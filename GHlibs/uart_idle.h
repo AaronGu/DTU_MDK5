@@ -6,11 +6,13 @@
 #include "usart.h"
 #include "string.h"
 
+
 /*** 串口定义 ***/
 #define Uart1_Rx_BufferSize                      (256)    /* 串口1接收buffer长度*/
 #define Uart2_Rx_BufferSize                      (256)    /* 串口2接收buffer长度*/
 #define Uart3_Rx_BufferSize                      (256)    /* 串口3接收buffer长度*/
 #define uart_debug                               (0)      /* 串口debug模式 */
+
 
 /*** 变量声明 ***/
 volatile extern uint8_t Uart1_Rx_Buffer[];
@@ -35,10 +37,12 @@ extern UART_HandleTypeDef huart1;
 extern UART_HandleTypeDef huart2;
 extern UART_HandleTypeDef huart3;
 
+
 /*** 串口接收中断函数声明 ***/
 //void USART1_IRQHandler(void);
 //void USART2_IRQHandler(void);
 void USART3_IRQHandler(void);
+
 
 
 #endif  // _UART_IDLE_
